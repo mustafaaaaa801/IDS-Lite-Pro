@@ -1,0 +1,30 @@
+# إعدادات المشروع (قابلة للتعديل دون تغيير الكود)
+sniffer:
+  iface: null         # null = default, أو اسم الواجهة مثل "Ethernet" أو "eth0"
+  count: 0            # 0 = مستمر، أو عدد محدد من الحزم
+  out_csv: "data/packets.csv"
+
+model:
+  contamination: 0.02
+  model_path: "model/joblib/model.joblib"
+  results_csv: "data/results.csv"
+
+logging:
+  file: "logs/ids_lite.log"
+  level: "INFO"
+  max_bytes: 10485760   # 10 MB
+  backup_count: 5
+
+signatures:
+  ssh_bruteforce:
+    enabled: true
+    threshold_per_minute: 10
+  suspicious_ports:
+    - 4444
+    - 6667
+    - 12345
+
+alerts:
+  enable_console: true
+  enable_file: true
+  webhook_url: ""   # ضع رابط webhook أو Telegram bot api هنا

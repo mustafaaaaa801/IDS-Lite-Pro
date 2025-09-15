@@ -1,0 +1,10 @@
+scapy
+pandas
+scikit-learn
+flask
+joblib
+pyyaml
+tqdm
+python-magic
+requests
+pytest

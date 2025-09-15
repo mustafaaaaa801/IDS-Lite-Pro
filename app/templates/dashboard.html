@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IDS-Lite-Pro Dashboard</title>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.min.js"></script>
+</head>
+<body>
+<h1>Live Packets</h1>
+<table border="1" id="packets_table">
+<tr>
+    <th>Src</th>
+    <th>Dst</th>
+    <th>Proto</th>
+    <th>DPort</th>
+    <th>Size</th>
+</tr>
+{% for pkt in packets %}
+<tr>
+    <td>{{ pkt.src }}</td>
+    <td>{{ pkt.dst }}</td>
+    <td>{{ pkt.proto }}</td>
+    <td>{{ pkt.dport }}</td>
+    <td>{{ pkt.size }}</td>
+</tr>
+{% endfor %}
+</table>
+
+<script>
+var socket = io();
+socket.on('new_packet', function(data){
+    let table = document.getElementById('packets_table');
+    let row = table.insertRow(1);  // أحدث باكيت يظهر فوق
+    row.insertCell(0).innerHTML = data.src;
+    row.insertCell(1).innerHTML = data.dst;
+    row.insertCell(2).innerHTML = data.proto;
+    row.insertCell(3).innerHTML = data.dport;
+    row.insertCell(4).innerHTML = data.size;
+
+    // المحافظة على آخر 50 باكيت فقط
+    while(table.rows.length > 51){  // +1 للرأس
+        table.deleteRow(table.rows.length - 1);
+    }
+});
+</script>
+</body>
+</html>
